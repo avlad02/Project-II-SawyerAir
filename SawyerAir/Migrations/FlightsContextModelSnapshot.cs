@@ -24,7 +24,7 @@ namespace SawyerAir.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FlightId")
+                    b.Property<int>("RouteId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("BookingDate")
@@ -39,9 +39,9 @@ namespace SawyerAir.Migrations
                     b.Property<string>("PaymentMethod")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ClientId", "FlightId");
+                    b.HasKey("ClientId", "RouteId");
 
-                    b.HasIndex("FlightId");
+                    b.HasIndex("RouteId");
 
                     b.ToTable("Booked");
                 });
@@ -72,38 +72,23 @@ namespace SawyerAir.Migrations
                     b.ToTable("Card");
                 });
 
-            modelBuilder.Entity("SawyerAir.Models.Class", b =>
-                {
-                    b.Property<int>("ClassId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ClassName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ClassId");
-
-                    b.ToTable("Class");
-                });
-
             modelBuilder.Entity("SawyerAir.Models.Class_Info", b =>
                 {
-                    b.Property<int>("ClassId")
+                    b.Property<int>("PlaneClassId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FlightId")
+                    b.Property<int>("RouteId")
                         .HasColumnType("int");
 
-                    b.Property<int>("No_seats")
+                    b.Property<int>("Nr_seats")
                         .HasColumnType("int");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.HasKey("ClassId", "FlightId");
+                    b.HasKey("PlaneClassId", "RouteId");
 
-                    b.HasIndex("FlightId");
+                    b.HasIndex("RouteId");
 
                     b.ToTable("Class_Info");
                 });
@@ -137,24 +122,21 @@ namespace SawyerAir.Migrations
 
             modelBuilder.Entity("SawyerAir.Models.Flight", b =>
                 {
-                    b.Property<int>("FlightId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("PlaneId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RouteId")
+                        .HasColumnType("int");
 
                     b.Property<TimeSpan>("Departure_Hour")
                         .HasColumnType("time");
 
-                    b.Property<string>("Departure_Location")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<TimeSpan>("Destination_Hour")
                         .HasColumnType("time");
 
-                    b.Property<string>("Destination_Location")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("PlaneId", "RouteId");
 
-                    b.HasKey("FlightId");
+                    b.HasIndex("RouteId");
 
                     b.ToTable("Flight");
                 });
@@ -166,7 +148,7 @@ namespace SawyerAir.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Location")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("LineId");
@@ -197,33 +179,68 @@ namespace SawyerAir.Migrations
                     b.ToTable("Plane");
                 });
 
-            modelBuilder.Entity("SawyerAir.Models.Plane_Flight", b =>
+            modelBuilder.Entity("SawyerAir.Models.PlaneClass", b =>
                 {
-                    b.Property<int>("PlaneId")
+                    b.Property<int>("PlaneClassId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClassName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PlaneClassId");
+
+                    b.ToTable("PlaneClass");
+                });
+
+            modelBuilder.Entity("SawyerAir.Models.Route", b =>
+                {
+                    b.Property<int>("RouteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Departure_Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Destination_Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RouteId");
+
+                    b.ToTable("Route");
+                });
+
+            modelBuilder.Entity("SawyerAir.Models.Route_Stop", b =>
+                {
+                    b.Property<int>("StopId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FlightId")
+                    b.Property<int>("RouteId")
                         .HasColumnType("int");
 
-                    b.HasKey("PlaneId", "FlightId");
+                    b.Property<float>("StopTime")
+                        .HasColumnType("real");
 
-                    b.HasIndex("FlightId");
+                    b.HasKey("StopId", "RouteId");
 
-                    b.ToTable("Plane_Flight");
+                    b.HasIndex("RouteId");
+
+                    b.ToTable("Route_Stop");
                 });
 
             modelBuilder.Entity("SawyerAir.Models.Stop", b =>
                 {
-                    b.Property<int>("FlightId")
-                        .HasColumnType("int");
+                    b.Property<int>("StopId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("StopAt")
+                    b.Property<string>("StopLocation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("StopHour")
-                        .HasColumnType("time");
-
-                    b.HasIndex("FlightId");
+                    b.HasKey("StopId");
 
                     b.ToTable("Stop");
                 });
@@ -231,14 +248,14 @@ namespace SawyerAir.Migrations
             modelBuilder.Entity("SawyerAir.Models.Booked", b =>
                 {
                     b.HasOne("SawyerAir.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("Bookeds")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SawyerAir.Models.Flight", "Flight")
-                        .WithMany()
-                        .HasForeignKey("FlightId")
+                    b.HasOne("SawyerAir.Models.Route", "Route")
+                        .WithMany("Bookeds")
+                        .HasForeignKey("RouteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -246,7 +263,7 @@ namespace SawyerAir.Migrations
             modelBuilder.Entity("SawyerAir.Models.Card", b =>
                 {
                     b.HasOne("SawyerAir.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("Cards")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -254,15 +271,30 @@ namespace SawyerAir.Migrations
 
             modelBuilder.Entity("SawyerAir.Models.Class_Info", b =>
                 {
-                    b.HasOne("SawyerAir.Models.Class", "Class")
-                        .WithMany()
-                        .HasForeignKey("ClassId")
+                    b.HasOne("SawyerAir.Models.PlaneClass", "PlaneClass")
+                        .WithMany("Class_Infos")
+                        .HasForeignKey("PlaneClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SawyerAir.Models.Flight", "Flight")
-                        .WithMany()
-                        .HasForeignKey("FlightId")
+                    b.HasOne("SawyerAir.Models.Route", "Route")
+                        .WithMany("Class_Infos")
+                        .HasForeignKey("RouteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SawyerAir.Models.Flight", b =>
+                {
+                    b.HasOne("SawyerAir.Models.Plane", "Plane")
+                        .WithMany("Flight")
+                        .HasForeignKey("PlaneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SawyerAir.Models.Route", "Route")
+                        .WithMany("Flights")
+                        .HasForeignKey("RouteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -276,26 +308,17 @@ namespace SawyerAir.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SawyerAir.Models.Plane_Flight", b =>
+            modelBuilder.Entity("SawyerAir.Models.Route_Stop", b =>
                 {
-                    b.HasOne("SawyerAir.Models.Flight", "Flight")
-                        .WithMany()
-                        .HasForeignKey("FlightId")
+                    b.HasOne("SawyerAir.Models.Route", "Route")
+                        .WithMany("Route_Stops")
+                        .HasForeignKey("RouteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SawyerAir.Models.Plane", "Plane")
-                        .WithMany()
-                        .HasForeignKey("PlaneId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SawyerAir.Models.Stop", b =>
-                {
-                    b.HasOne("SawyerAir.Models.Flight", "Flight")
-                        .WithMany()
-                        .HasForeignKey("FlightId")
+                    b.HasOne("SawyerAir.Models.Stop", "Stop")
+                        .WithMany("Route_Stops")
+                        .HasForeignKey("StopId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

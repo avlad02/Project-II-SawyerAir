@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace SawyerAir.Models
 {
-    public class Stop
+    public class Route_Stop
     {
+        [Key, ForeignKey("Stop")]
         public int StopId { get; set; }
-        public string StopLocation { get; set; }
 
-        public ICollection<Route_Stop> Route_Stops { get; set; }
+        [Key, ForeignKey("Route")]
+        public int RouteId { get; set; }
+        public float StopTime { get; set; }
+
+        public Stop Stop { get; set; }
+        public Route Route { get; set; }
     }
 }

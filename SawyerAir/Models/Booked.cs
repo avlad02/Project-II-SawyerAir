@@ -12,14 +12,14 @@ namespace SawyerAir.Models
         [Key, ForeignKey("Client")]
         public int ClientId { get; set; }
 
-        [Key, ForeignKey("Flight")]
-        public int FlightId { get; set; }
+        [Key, ForeignKey("Route")]
+        public int RouteId { get; set; }
         public DateTime PaymentDate { get; set; }
         public string PaymentMethod { get; set; }
         public int FlightClass { get; set; }
         public DateTime BookingDate { get; set; }
 
         public Client Client { get; set; }
-        public Flight Flight { get; set; }
+        public Route Route { get; set; }
     }
 }

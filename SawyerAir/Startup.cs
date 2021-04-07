@@ -26,7 +26,7 @@ namespace SawyerAir
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=SawyerAirDb;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=SawyerAir1Db;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<FlightsContext>
                 (options => options.UseSqlServer(connection));
         }

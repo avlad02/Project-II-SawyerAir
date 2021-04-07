@@ -16,5 +16,7 @@ namespace SawyerAir.Models
         [ForeignKey("Line")]
         public int LineId         { get; set; }
         public Line Line           { get; set; }
+
+        public ICollection<Flight> Flight { get; set; }
     }
 }

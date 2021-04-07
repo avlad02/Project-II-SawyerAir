@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SawyerAir", "SawyerAir.csproj", "{3AEE619B-5029-4D1A-ABB3-0C2AA5F9E4E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SawyerAir", "SawyerAir.csproj", "{5F387A7F-3559-45E8-B7C6-63E391441BD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3AEE619B-5029-4D1A-ABB3-0C2AA5F9E4E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AEE619B-5029-4D1A-ABB3-0C2AA5F9E4E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AEE619B-5029-4D1A-ABB3-0C2AA5F9E4E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AEE619B-5029-4D1A-ABB3-0C2AA5F9E4E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F387A7F-3559-45E8-B7C6-63E391441BD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F387A7F-3559-45E8-B7C6-63E391441BD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F387A7F-3559-45E8-B7C6-63E391441BD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F387A7F-3559-45E8-B7C6-63E391441BD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D4A324FE-4974-4BA9-887D-05B618B4E41F}
+		SolutionGuid = {77E4EDBD-AED1-473A-A60B-6FE94A6B7F2F}
 	EndGlobalSection
 EndGlobal
