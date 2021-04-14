@@ -24,5 +24,6 @@ namespace SawyerAir.Models
         public DbSet<Client> Clients { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Route_Stop> Route_Stops { get; set; }
+        public object Route { get; internal set; }
     }
 }

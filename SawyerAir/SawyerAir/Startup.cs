@@ -29,8 +29,7 @@ namespace SawyerAir
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
@@ -38,6 +37,8 @@ namespace SawyerAir
             var connection = @"Server=(localdb)\mssqllocaldb;Database=SawyerAirDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<FlightsContext>
                 (options => options.UseSqlServer(connection));
+            services.AddDbContext<FlightsContext>(options =>
+        options.UseSqlServer(Configuration.GetConnectionString("FlightsContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
