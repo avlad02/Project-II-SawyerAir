@@ -12,7 +12,15 @@ namespace SawyerAir.Models
         public int FlightId { get; set;  }
         public int PlaneId { get; set; }
         public int RouteId { get; set; }
+
+        
+        [Display(Name = "Departure Date")]
+        public DateTime DepartureDate { get; set; }
+
+        [Display(Name ="Hour of departure")]
         public TimeSpan DepartureHour { get; set; }
+
+        [Display(Name = "Hour of arrival")]
         public TimeSpan DestinationHour { get; set; }
         public Plane Plane { get; set; }
         public Route Route { get; set; }
