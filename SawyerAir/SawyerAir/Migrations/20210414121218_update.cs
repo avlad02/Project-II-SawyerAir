@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SawyerAir.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class update : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,8 +11,8 @@ namespace SawyerAir.Migrations
                 name: "Clients",
                 columns: table => new
                 {
-                    ClientId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Surname = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
@@ -21,7 +21,7 @@ namespace SawyerAir.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clients", x => x.ClientId);
+                    table.PrimaryKey("PK_Clients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -81,22 +81,23 @@ namespace SawyerAir.Migrations
                 name: "Cards",
                 columns: table => new
                 {
-                    CardId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(nullable: false),
+                    CardId = table.Column<Guid>(nullable: false),
                     ClientId = table.Column<int>(nullable: false),
                     ExpirationDate = table.Column<DateTime>(nullable: false),
                     Number = table.Column<int>(nullable: false),
-                    CVC = table.Column<int>(nullable: false)
+                    CVC = table.Column<int>(nullable: false),
+                    ClientId1 = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cards", x => x.CardId);
+                    table.PrimaryKey("PK_Cards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cards_Clients_ClientId",
-                        column: x => x.ClientId,
+                        name: "FK_Cards_Clients_ClientId1",
+                        column: x => x.ClientId1,
                         principalTable: "Clients",
-                        principalColumn: "ClientId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -124,24 +125,25 @@ namespace SawyerAir.Migrations
                 name: "Bookings",
                 columns: table => new
                 {
-                    BookingId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(nullable: false),
+                    BookingId = table.Column<int>(nullable: false),
                     ClientId = table.Column<int>(nullable: false),
                     RouteId = table.Column<int>(nullable: false),
                     PaymentDate = table.Column<DateTime>(nullable: false),
                     PaymentMethod = table.Column<string>(nullable: true),
                     FlightClass = table.Column<int>(nullable: false),
-                    BookingDate = table.Column<DateTime>(nullable: false)
+                    BookingDate = table.Column<DateTime>(nullable: false),
+                    ClientId1 = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bookings", x => x.BookingId);
+                    table.PrimaryKey("PK_Bookings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bookings_Clients_ClientId",
-                        column: x => x.ClientId,
+                        name: "FK_Bookings_Clients_ClientId1",
+                        column: x => x.ClientId1,
                         principalTable: "Clients",
-                        principalColumn: "ClientId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Bookings_Routes_RouteId",
                         column: x => x.RouteId,
@@ -234,9 +236,9 @@ namespace SawyerAir.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookings_ClientId",
+                name: "IX_Bookings_ClientId1",
                 table: "Bookings",
-                column: "ClientId");
+                column: "ClientId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_RouteId",
@@ -244,9 +246,9 @@ namespace SawyerAir.Migrations
                 column: "RouteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cards_ClientId",
+                name: "IX_Cards_ClientId1",
                 table: "Cards",
-                column: "ClientId");
+                column: "ClientId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Class_Infos_PlaneClassId",

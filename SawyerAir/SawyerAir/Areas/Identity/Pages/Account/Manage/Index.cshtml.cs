@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SawyerAir.Models;
+using SawyerAir.Services;
 
 namespace SawyerAir.Areas.Identity.Pages.Account.Manage
 {
@@ -13,16 +15,24 @@ namespace SawyerAir.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ClientService _clientService;
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            ClientService clientService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _clientService = clientService;
         }
 
-        public string Username { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public string Adress { get; set; }
+
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -32,21 +42,38 @@ namespace SawyerAir.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Phone]
-            [Display(Name = "Phone number")]
+            [Required]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
+
+            [Required]
+            [Display(Name = "First Name")]
+            public string Surname { get; set; }
+
+            [Required]
+            [StringLength(10, ErrorMessage = "Phone number must be 10 numbers long", MinimumLength = 10)]
+            [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }
+
+            [Required]
+            [Display(Name = "Adress")]
+            public string Address { get; set; }
         }
 
         private async Task LoadAsync(IdentityUser user)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            //var userName = await _userManager.GetUserNameAsync(user);
 
-            Username = userName;
+            var id = await _userManager.GetUserIdAsync(user);
+            Client client = _clientService.GetClientFromUserId(id);
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                
+                Surname = client.Surname,
+                PhoneNumber = client.PhoneNumber,
+                Name = client.Name,
+                Address = client.Address
             };
         }
 
@@ -75,6 +102,18 @@ namespace SawyerAir.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
+
+            var id = await _userManager.GetUserIdAsync(user);
+            Client client = _clientService.GetClientFromUserId(id);
+
+            client.Name = Input.Name;
+            client.Surname = Input.Surname;
+            client.Address = Input.Address;
+            client.PhoneNumber = Input.PhoneNumber;
+
+            _clientService.UpdateClientDetails(Guid.Parse(id),client);
+
+
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)

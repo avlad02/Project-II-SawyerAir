@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace SawyerAir.Models
 {
-    public class Client
+    public class Client : DataEntity
     {
-        public int ClientId { get; set; }
+        public Guid ClientId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
@@ -15,5 +15,25 @@ namespace SawyerAir.Models
         public string Address { get; set; }
         public ICollection<Booking> Bookings { get; set; }
         public ICollection<Card> Cards { get; set; }
+
+
+        protected Client()
+        {
+        }
+        public static Client Create(Guid userId, string email, string name, string surname, string phoneNumber, string address)
+        {
+            var newCustomer = new Client()
+            {
+                Id = userId,
+                Name = name,
+                Surname = surname,
+                PhoneNumber = phoneNumber,
+                Email = email,
+                Address = address,
+                Bookings = new List<Booking>(),
+                Cards = new List<Card>()
+            };
+            return newCustomer;
+        }
     }
 }

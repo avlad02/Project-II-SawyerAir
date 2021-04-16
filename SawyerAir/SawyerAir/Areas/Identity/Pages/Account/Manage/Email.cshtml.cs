@@ -94,16 +94,18 @@ namespace SawyerAir.Areas.Identity.Pages.Account.Manage
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
                 var callbackUrl = Url.Page(
-                    "/Account/ConfirmEmailChange",
-                    pageHandler: null,
-                    values: new { userId = userId, email = Input.NewEmail, code = code },
-                    protocol: Request.Scheme);
+                      "/Account/ConfirmEmailChange",
+                      pageHandler: null,
+                      values: new { userId = userId, email = Input.NewEmail, code = code },
+                      protocol: Request.Scheme);
+                 
+                await _userManager.SetEmailAsync(user, Input.NewEmail);
                 await _emailSender.SendEmailAsync(
-                    Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
+                      Input.NewEmail,
+                      "Confirm your email",
+                      $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
                 StatusMessage = "Confirmation link to change email sent. Please check your email.";
+                //await OnPostSendVerificationEmailAsync();
                 return RedirectToPage();
             }
 
@@ -138,7 +140,8 @@ namespace SawyerAir.Areas.Identity.Pages.Account.Manage
                 email,
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            await _userManager.ConfirmEmailAsync(user, token);
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToPage();
         }
