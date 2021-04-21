@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SawyerAir.Models
 {
-    public class Booking
+    public class Booking:DataEntity
     {
         public int BookingId { get; set; }
         public int ClientId { get; set; } 

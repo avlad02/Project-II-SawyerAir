@@ -1,10 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SawyerAir.Exceptions;
+using SawyerAir.Services;
 
 namespace SawyerAir.Areas.Identity.Pages.Account.Manage
 {
@@ -13,15 +16,18 @@ namespace SawyerAir.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly ClientService _clientService;
 
         public DeletePersonalDataModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger,
+            ClientService clientService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _clientService = clientService;
         }
 
         [BindProperty]
@@ -68,6 +74,10 @@ namespace SawyerAir.Areas.Identity.Pages.Account.Manage
 
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
+            var client = _clientService.GetClientByUserId(userId);
+            _clientService.DeleteClient(client);
+            _clientService.Save();
+
             if (!result.Succeeded)
             {
                 throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userId}'.");

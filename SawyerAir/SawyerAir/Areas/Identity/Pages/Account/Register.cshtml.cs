@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using SawyerAir.Services;
 
 namespace SawyerAir.Areas.Identity.Pages.Account
 {
@@ -23,17 +24,20 @@ namespace SawyerAir.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ClientService _clientService;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ClientService clientService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _clientService = clientService;
         }
 
         [BindProperty]
@@ -60,7 +64,24 @@ namespace SawyerAir.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
+            [Required]
+            [Display(Name = "First Name")]
+            public string Surname { get; set; }
+
+            [Required]
+            [StringLength(10, ErrorMessage = "Phone number must be 10 numbers long", MinimumLength = 10)]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
+
+            [Required]
+            [Display(Name = "Adress")]
+            public string Address { get; set; }
         }
+
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -74,10 +95,14 @@ namespace SawyerAir.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new IdentityUser { UserName = Input.Name + "_" + Input.Surname, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    var client = _clientService.CreateClient(Guid.Parse(user.Id), Input.Email, Input.Name, Input.Surname, Input.PhoneNumber, Input.Address);
+                    _clientService.AddClient(client);
+                    _clientService.Save();
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
