@@ -8,11 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using SawyerAir.Models;
 using SawyerAir.Data;
 
+
 namespace SawyerAir.Controllers
 {
     public class RoutesController : Controller
     {
         private readonly FlightsContext _context;
+
         private string searchString;
 
         public string RouteDestLoc { get; private set; }
@@ -22,12 +24,14 @@ namespace SawyerAir.Controllers
             return View();
         }
 
+
         public RoutesController(FlightsContext context)
         {
             _context = context;
         }
 
         // GET: Routes
+
         public async Task<IActionResult> Index(string RouteDestLoc, string searchString)
         {
             IQueryable<string> destlocQuery = from m in _context.Routes
@@ -56,6 +60,7 @@ namespace SawyerAir.Controllers
             return View(RouteDestLocVM);
         }
        
+
         // GET: Routes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -73,7 +78,7 @@ namespace SawyerAir.Controllers
 
             return View(route);
         }
-         
+  
         // GET: Routes/Create
         public IActionResult Create()
         {
@@ -97,6 +102,7 @@ namespace SawyerAir.Controllers
         }
 
         // GET: Routes/Edit/5
+
         public async Task<IActionResult> Flights(int? id)
         {
             if (id == null)

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SawyerAir.Models;
 
 namespace SawyerAir.Migrations
 {
     [DbContext(typeof(FlightsContext))]
-    partial class FlightsContextModelSnapshot : ModelSnapshot
+    [Migration("20210416061148_date1")]
+    partial class date1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,16 @@ namespace SawyerAir.Migrations
 
             modelBuilder.Entity("SawyerAir.Models.Booking", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("BookingId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("BookingId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
-
-                    b.Property<Guid?>("ClientId1")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("FlightClass")
                         .HasColumnType("int");
@@ -49,9 +46,9 @@ namespace SawyerAir.Migrations
                     b.Property<int>("RouteId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("BookingId");
 
-                    b.HasIndex("ClientId1");
+                    b.HasIndex("ClientId");
 
                     b.HasIndex("RouteId");
 
@@ -60,21 +57,16 @@ namespace SawyerAir.Migrations
 
             modelBuilder.Entity("SawyerAir.Models.Card", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("CardId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CVC")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("CardId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
-
-                    b.Property<Guid?>("ClientId1")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
@@ -82,9 +74,9 @@ namespace SawyerAir.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("CardId");
 
-                    b.HasIndex("ClientId1");
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Cards");
                 });
@@ -119,15 +111,13 @@ namespace SawyerAir.Migrations
 
             modelBuilder.Entity("SawyerAir.Models.Client", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("ClientId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -141,7 +131,7 @@ namespace SawyerAir.Migrations
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ClientId");
 
                     b.ToTable("Clients");
                 });
@@ -292,7 +282,9 @@ namespace SawyerAir.Migrations
                 {
                     b.HasOne("SawyerAir.Models.Client", "Client")
                         .WithMany("Bookings")
-                        .HasForeignKey("ClientId1");
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SawyerAir.Models.Route", "Route")
                         .WithMany("Bookings")
@@ -305,7 +297,9 @@ namespace SawyerAir.Migrations
                 {
                     b.HasOne("SawyerAir.Models.Client", "Client")
                         .WithMany("Cards")
-                        .HasForeignKey("ClientId1");
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SawyerAir.Models.Class_Info", b =>
