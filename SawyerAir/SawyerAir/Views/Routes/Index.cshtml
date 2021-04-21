@@ -1,41 +1,48 @@
-﻿@model IEnumerable<SawyerAir.Models.Route>
+﻿@model SawyerAir.Models.RouteDestLocView 
+
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Routes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DepartureLocation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DestinationLocation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartureLocation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DestinationLocation)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.RouteId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RouteId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RouteId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<h2>Available routes:</h2>
+<form asp-controller="Routes" asp-action="Index" method="get">
+    <p>
+         Filter destination locations  </p>
+        <select asp-for="RouteDestLoc" asp-items="Model.DestinationLocations">
+            <option value="">All</option>
+        </select>
+        Location: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Routes[0].DepartureLocation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Routes[0].DestinationLocation)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Routes)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DepartureLocation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DestinationLocation)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.RouteId">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

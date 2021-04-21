@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace SawyerAir.Models
 {
-    public class Card
+    public class Card:DataEntity
     {
-        public int CardId { get; set; }
-        [ForeignKey("Client")]
+        public Guid CardId { get; set; }
         public int ClientId { get; set; }
         public DateTime ExpirationDate { get; set; }
         public int Number { get; set; }

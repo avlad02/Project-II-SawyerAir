@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SawyerAir.Models;
+using SawyerAir.Data;
+
 
 namespace SawyerAir.Controllers
 {
@@ -13,16 +15,51 @@ namespace SawyerAir.Controllers
     {
         private readonly FlightsContext _context;
 
+        private string searchString;
+
+        public string RouteDestLoc { get; private set; }
+
+        public IActionResult Routes()
+        {
+            return View();
+        }
+
+
         public RoutesController(FlightsContext context)
         {
             _context = context;
         }
 
         // GET: Routes
-        public async Task<IActionResult> Index()
+
+        public async Task<IActionResult> Index(string RouteDestLoc, string searchString)
         {
-            return View(await _context.Routes.ToListAsync());
+            IQueryable<string> destlocQuery = from m in _context.Routes
+                                            orderby m.DestinationLocation
+                                            select m.DestinationLocation;
+
+            var routes = from m in _context.Routes
+                         select m;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                routes = routes.Where(s => s.DestinationLocation.Contains(searchString));
+            }  
+
+            if (!string.IsNullOrEmpty(RouteDestLoc))
+            {
+                routes = routes.Where(x => x.DestinationLocation == RouteDestLoc);
+            }
+
+            var RouteDestLocVM = new RouteDestLocView
+            {
+                DestinationLocations = new SelectList(await destlocQuery.Distinct().ToListAsync()),
+                Routes = await routes.ToListAsync()
+            };
+
+            return View(RouteDestLocVM);
         }
+       
 
         // GET: Routes/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -41,7 +78,7 @@ namespace SawyerAir.Controllers
 
             return View(route);
         }
-
+  
         // GET: Routes/Create
         public IActionResult Create()
         {
@@ -65,7 +102,8 @@ namespace SawyerAir.Controllers
         }
 
         // GET: Routes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+
+        public async Task<IActionResult> Flights(int? id)
         {
             if (id == null)
             {
@@ -85,7 +123,7 @@ namespace SawyerAir.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RouteId,DepartureLocation,DestinationLocation")] Route route)
+        public async Task<IActionResult> Flights(int id, [Bind("RouteId,DepartureLocation,DestinationLocation")] Route route)
         {
             if (id != route.RouteId)
             {
@@ -142,7 +180,7 @@ namespace SawyerAir.Controllers
             _context.Routes.Remove(route);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
+        } 
 
         private bool RouteExists(int id)
         {
