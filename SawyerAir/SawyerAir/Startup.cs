@@ -7,8 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SawyerAir.Abstractions;
 using SawyerAir.Data;
 using SawyerAir.Models;
+using SawyerAir.Repositories;
+using SawyerAir.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +41,9 @@ namespace SawyerAir
             var connection = @"Server=(localdb)\mssqllocaldb;Database=SawyerAirDb;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<FlightsContext>
                 (options => options.UseSqlServer(connection));
+
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddScoped<ClientService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
