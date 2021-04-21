@@ -99,7 +99,10 @@ namespace SawyerAir.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    var client = _clientService.RegisterNewCustomer(user.Id, Input.Email, Input.Name, Input.Surname, Input.PhoneNumber, Input.Address);
+                    var client = _clientService.CreateClient(Guid.Parse(user.Id), Input.Email, Input.Name, Input.Surname, Input.PhoneNumber, Input.Address);
+                    _clientService.AddClient(client);
+                    _clientService.Save();
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

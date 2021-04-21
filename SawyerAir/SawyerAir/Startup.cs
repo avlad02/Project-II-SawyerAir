@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using SawyerAir.Abstractions;
 using SawyerAir.Data;
 using SawyerAir.Models;
+using SawyerAir.Repositories;
 using SawyerAir.Services;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace SawyerAir
             services.AddDbContext<FlightsContext>
                 (options => options.UseSqlServer(connection));
 
-            services.AddScoped<IPersistenceContext, EFPersistenceContext>();
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddScoped<ClientService>();
         }
 

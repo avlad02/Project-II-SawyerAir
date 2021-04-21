@@ -22,7 +22,7 @@ namespace SawyerAir.Models
         }
         public static Client Create(Guid userId, string email, string name, string surname, string phoneNumber, string address)
         {
-            var newCustomer = new Client()
+            var newClient = new Client()
             {
                 Id = userId,
                 Name = name,
@@ -33,7 +33,7 @@ namespace SawyerAir.Models
                 Bookings = new List<Booking>(),
                 Cards = new List<Card>()
             };
-            return newCustomer;
+            return newClient;
         }
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using SawyerAir.Services;
 
 namespace SawyerAir.Areas.Identity.Pages.Account.Manage
 {
@@ -18,15 +19,18 @@ namespace SawyerAir.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly ClientService _clientService;
 
         public EmailModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ClientService clientService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _clientService = clientService;
         }
 
         public string Username { get; set; }
@@ -93,6 +97,12 @@ namespace SawyerAir.Areas.Identity.Pages.Account.Manage
             {
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
+
+                var client = _clientService.GetClientByUserId(userId);
+                client.Email = Input.NewEmail;
+                _clientService.UpdateClient(client);
+                _clientService.Save();
+
                 var callbackUrl = Url.Page(
                       "/Account/ConfirmEmailChange",
                       pageHandler: null,

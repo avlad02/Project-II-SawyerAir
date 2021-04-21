@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SawyerAir.Models;
 using SawyerAir.Services;
 
 namespace SawyerAir.Areas.Identity.Pages.Account.Manage
@@ -65,7 +64,7 @@ namespace SawyerAir.Areas.Identity.Pages.Account.Manage
             //var userName = await _userManager.GetUserNameAsync(user);
 
             var id = await _userManager.GetUserIdAsync(user);
-            Client client = _clientService.GetClientFromUserId(id);
+            var client = _clientService.GetClientByUserId(id);
 
             Input = new InputModel
             {
@@ -104,14 +103,15 @@ namespace SawyerAir.Areas.Identity.Pages.Account.Manage
             }
 
             var id = await _userManager.GetUserIdAsync(user);
-            Client client = _clientService.GetClientFromUserId(id);
+            var client = _clientService.GetClientByUserId(id);
 
             client.Name = Input.Name;
             client.Surname = Input.Surname;
             client.Address = Input.Address;
             client.PhoneNumber = Input.PhoneNumber;
 
-            _clientService.UpdateClientDetails(Guid.Parse(id),client);
+            _clientService.UpdateClient(client);
+            _clientService.Save();
 
 
 

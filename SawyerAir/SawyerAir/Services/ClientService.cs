@@ -5,48 +5,52 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SawyerAir.Repositories;
+using System.Linq.Expressions;
 
 namespace SawyerAir.Services
 {
-    public class ClientService
+    public class ClientService : BaseService
     {
-        private IClientRepository clientRepository;
-        private IPersistenceContext persistContext;
-        public ClientService(IPersistenceContext persistenceContext)
-        {
-            clientRepository = persistenceContext.ClientRepository;
-            persistContext = persistenceContext;
+
+        public ClientService(IRepositoryWrapper repositoryWrapper)
+            : base(repositoryWrapper)
+        { 
         }
 
-        public Client RegisterNewCustomer(string userId, string email, string name, string surname, string phoneNumber, string address)
+        public List<Client> GetClients()
         {
-            var client = Client.Create(Guid.Parse(userId), email, name, surname,phoneNumber,address);
-            client = clientRepository.Add(client);
-            persistContext.SaveChanges();
-            return client;
-
+            return repositoryWrapper.ClientRepository.FindAll().ToList();
         }
 
-        public Client UpdateClientDetails(Guid clientId, Client clientDetails)
+        public List<Client> GetClientsByCondition(Expression<Func<Client, bool>> expression)
         {
-            return clientRepository.UpdateClientDetails(clientId, clientDetails);
+            return repositoryWrapper.ClientRepository.FindByCondition(expression).ToList();
         }
 
-        public bool DeleteClient(Guid clientId)
+        public void AddClient(Client Client)
         {
-            return clientRepository.Remove(clientId);
+            repositoryWrapper.ClientRepository.Create(Client);
         }
 
-        public Client GetClientFromUserId(string userId)
+        public void UpdateClient(Client Client)
         {
-            Guid idToSearch = Guid.Parse(userId);
-            var customer = clientRepository?.GetClientByUserId(idToSearch);
-            if (customer == null)
-            {
-                throw new ClientNotFoundException(userId);
-            }
+            repositoryWrapper.ClientRepository.Update(Client);
+        }
 
-            return customer;
+        public void DeleteClient(Client Client)
+        {
+            repositoryWrapper.ClientRepository.Delete(Client);
+        }
+
+        public Client CreateClient(Guid userId, string email, string name, string surname, string phoneNumber, string address)
+        {
+            return Client.Create(userId, email, name, surname, phoneNumber, address);
+        }
+
+        public Client GetClientByUserId(string Id)
+        {
+            return GetClients().FirstOrDefault(m => m.Id == Guid.Parse(Id));
         }
     }
 }
