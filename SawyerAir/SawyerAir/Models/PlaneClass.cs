@@ -8,7 +8,7 @@ namespace SawyerAir.Models
 {
     public class PlaneClass
     {
-        public int PlaneClassId { get; set; }
+        public Guid PlaneClassId { get; set; }
         public string ClassName { get; set; }
         public ICollection<Class_Info> Class_Infos { get; set; }
     }

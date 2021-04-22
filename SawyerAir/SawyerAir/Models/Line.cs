@@ -8,7 +8,7 @@ namespace SawyerAir.Models
 {
     public class Line
     {
-        public int LineId     { get; set; }
+        public Guid LineId     { get; set; }
         public string Name { get; set; }
         public ICollection<Plane> Planes { get; set; }
     }

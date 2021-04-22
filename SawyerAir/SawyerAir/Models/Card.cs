@@ -9,7 +9,7 @@ namespace SawyerAir.Models
     public class Card:DataEntity
     {
         public Guid CardId { get; set; }
-        public int ClientId { get; set; }
+        public Guid ClientId { get; set; }
         public DateTime ExpirationDate { get; set; }
         public int Number { get; set; }
         public int CVC { get; set; }
