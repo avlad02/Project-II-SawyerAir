@@ -5,18 +5,38 @@
     ViewData["Title"] = "Routes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<head>
+    <style>
+        body {
+            background-image: url('img/airplane.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            width: 100%;
+        }
 
-<h2>Available routes:</h2>
-<form asp-controller="Routes" asp-action="Index" method="get">
-    <p>
-         Filter destination locations  </p>
+        p {
+            color: #FFFAF0;
+            margin-left: 20px;
+            text-align: left;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 19px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Available routes:</h2>
+    <form asp-controller="Routes" asp-action="Index" method="get">
+        <p>
+            Filter destination locations
+        </p>
         <select asp-for="RouteDestLoc" asp-items="Model.DestinationLocations">
             <option value="">All</option>
         </select>
         Location: <input type="text" name="SearchString" />
         <input type="submit" value="Filter" />
-    </p>
-</form>
+        </p>
+    </form>
     <table class="table">
         <thead>
             <tr>
@@ -46,3 +66,4 @@
             }
         </tbody>
     </table>
+</body>
