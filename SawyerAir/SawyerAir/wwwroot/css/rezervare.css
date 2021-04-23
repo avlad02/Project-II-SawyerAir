@@ -7,12 +7,12 @@ body {
      }
 
 
- p {
-  color: #FFFAF0;
-  margin-left: 20px;
-  text-align : left ;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 19px;
-   }
+p {
+    color: black;
+    margin-left: 20px;
+    text-align: left;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 19px;
+}
 
 

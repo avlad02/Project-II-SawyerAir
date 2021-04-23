@@ -31,8 +31,8 @@ namespace SawyerAir.Controllers
         public async Task<IActionResult> Index(string RouteDestLoc, string searchString)
         {
             IQueryable<string> destlocQuery = from m in _context.Routes
-                                            orderby m.DestinationLocation
-                                            select m.DestinationLocation;
+                                              orderby m.DestinationLocation
+                                              select m.DestinationLocation;
 
             var routes = from m in _context.Routes
                          select m;
@@ -40,7 +40,7 @@ namespace SawyerAir.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 routes = routes.Where(s => s.DestinationLocation.Contains(searchString));
-            }  
+            }
 
             if (!string.IsNullOrEmpty(RouteDestLoc))
             {
@@ -55,7 +55,7 @@ namespace SawyerAir.Controllers
 
             return View(RouteDestLocVM);
         }
-       
+
         // GET: Routes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -73,7 +73,7 @@ namespace SawyerAir.Controllers
 
             return View(route);
         }
-         
+
         // GET: Routes/Create
         public IActionResult Create()
         {
@@ -174,7 +174,7 @@ namespace SawyerAir.Controllers
             _context.Routes.Remove(route);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        } 
+        }
 
         private bool RouteExists(int id)
         {

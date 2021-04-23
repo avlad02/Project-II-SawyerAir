@@ -5,27 +5,34 @@
     ViewData["Title"] = "Routes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <head>
+    <link href="~/css/rezervare.css" rel="stylesheet" />
     <style>
         body {
-            background-image: url('img/airplane.jpg');
+            background-image: url('img/airplane4.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: 100% 100%;
             width: 100%;
         }
-
         p {
-            color: #FFFAF0;
+            color: black;
             margin-left: 20px;
             text-align: left;
             font-family: Arial, Helvetica, sans-serif;
             font-size: 19px;
         }
+        a
+        {
+            color:black;
+        }
+
     </style>
 </head>
 <body>
-    <h2>Available routes:</h2>
+    <h3 style="text-align:center">Explore travelling possibilities with SawyerAir!</h3>
+    <h1>Available routes:</h1>
     <form asp-controller="Routes" asp-action="Index" method="get">
         <p>
             Filter destination locations
@@ -33,8 +40,8 @@
         <select asp-for="RouteDestLoc" asp-items="Model.DestinationLocations">
             <option value="">All</option>
         </select>
-        Location: <input type="text" name="SearchString" />
-        <input type="submit" value="Filter" />
+        Quick search: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" class="button button1" />
         </p>
     </form>
     <table class="table">
@@ -60,7 +67,7 @@
                         @Html.DisplayFor(modelItem => item.DestinationLocation)
                     </td>
                     <td>
-                        <a asp-action="Details" asp-route-id="@item.RouteId">Details</a>
+                        <b> <a asp-action="Details" asp-route-id="@item.RouteId">Details</a></b>
                     </td>
                 </tr>
             }

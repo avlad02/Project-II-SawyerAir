@@ -9,9 +9,9 @@ namespace SawyerAir.Models
 {
     public class Route_Stop
     {
-        public int Route_StopId { get; set; }
-        public int StopId { get; set; }
-        public int RouteId { get; set; }
+        public Guid Route_StopId { get; set; }
+        public Guid StopId { get; set; }
+        public Guid RouteId { get; set; }
         public float StopTime { get; set; }
         public Stop Stop { get; set; }
         public Route Route { get; set; }

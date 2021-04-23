@@ -9,9 +9,9 @@ namespace SawyerAir.Models
 {
     public class Booking:DataEntity
     {
-        public int BookingId { get; set; }
-        public int ClientId { get; set; } 
-        public int RouteId { get; set; }
+        public Guid BookingId { get; set; }
+        public Guid ClientId { get; set; } 
+        public Guid RouteId { get; set; }
         public DateTime PaymentDate { get; set; }
         public string PaymentMethod { get; set; }
         public int FlightClass { get; set; }

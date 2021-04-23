@@ -9,12 +9,12 @@ namespace SawyerAir.Models
 {
     public class Plane
     {
-        public int PlaneId        { get; set; }
+        public Guid PlaneId        { get; set; }
         public string Model        { get; set; }
         public string Manufacturer { get; set; }
 
         [ForeignKey("Line")]
-        public int LineId         { get; set; }
+        public Guid LineId         { get; set; }
         public Line Line           { get; set; }
 
         public ICollection<Flight> Flight { get; set; }

@@ -9,9 +9,9 @@ namespace SawyerAir.Models
 {
     public class Class_Info
     {
-        public int Class_InfoId { get; set; }
-        public int PlaneClassId { get; set; }
-        public int RouteId { get; set; }
+        public Guid Class_InfoId { get; set; }
+        public Guid PlaneClassId { get; set; }
+        public Guid RouteId { get; set; }
         public int NrSeats { get; set; }
         public int Price { get; set; }
 
