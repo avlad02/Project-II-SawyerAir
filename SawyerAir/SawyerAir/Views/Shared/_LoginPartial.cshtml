@@ -3,22 +3,44 @@
 @inject UserManager<IdentityUser> UserManager
 
 <ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    }
+</ul>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
-    </li>
-}
+    <script>
+        $(document).ready(function () {
+            var loginPrompt = localStorage.getItem("loginPrompt")
+            if (loginPrompt != 1) {
+                alert(" Login operation done with success! Welcome back !")
+                localStorage.setItem("loginPrompt", 1)
+            };
+        });
+    </script>
+ }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+    <script>
+        $(document).ready(function () {
+            localStorage.setItem("loginPrompt", 0);
+        });
+    </script>
 }
-</ul>
