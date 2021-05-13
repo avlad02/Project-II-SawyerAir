@@ -5,21 +5,33 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Booking page</h1>
 
-<h4>Booking</h4>
+<h4>Book the selected flight.</h4>
 <hr />
+<br />
+<a> Price Plane Class 4:      10.99 $ </a>
+<br />
+<a>Price Plane Class 3 :   15.05 $  </a>
+<br />
+<a> Price Plane Class 2 :   19.99 $ </a>
+<br />
+<a>Price Plane Class 1 :   29.99 $  </a>
+<br />
+
+<br />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ClientId" class="control-label"></label>
-                <select asp-for="ClientId" class ="form-control" asp-items="ViewBag.ClientId"></select>
+                <select asp-for="ClientId" class="form-control" asp-items="ViewBag.ClientId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="RouteId" class="control-label"></label>
-                <select asp-for="RouteId" class ="form-control" asp-items="ViewBag.RouteId"></select>
+                <select asp-for="RouteId" class="form-control" asp-items="ViewBag.RouteId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PaymentDate" class="control-label"></label>
@@ -42,14 +54,14 @@
                 <span asp-validation-for="BookingDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Go to payment" class="button button1" asp-controller="Cards" asp-action="Create"> </input>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Routes" asp-action="Index">Go Back to Routes</a>
 </div>
 
 @section Scripts {

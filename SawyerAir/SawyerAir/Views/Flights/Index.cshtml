@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SawyerAir.Models.Flight>
 
 @{
-    ViewData["Title"] = "IndexRouteId";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <head>
@@ -31,7 +31,9 @@
     <table class="table">
         <thead>
             <tr>
-
+                <th>
+                    @Html.DisplayNameFor(model => model.RouteId)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DepartureDate)
                 </th>
@@ -41,7 +43,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.DestinationHour)
                 </th>
-
+                <th>
+                    @Html.DisplayNameFor(model => model.Plane)
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -49,7 +53,9 @@
             @foreach (var item in Model)
             {
                 <tr>
-
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RouteId)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DepartureDate)
                     </td>
@@ -59,9 +65,11 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.DestinationHour)
                     </td>
-
                     <td>
-                        <a asp-controller="Bookings" asp-action="Create" asp-route-flightId="@item.FlightId" class="button button1" >Book</a>
+                        @Html.DisplayFor(modelItem => item.Plane.PlaneId)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.FlightId">Details</a> 
                     </td>
                 </tr>
             }

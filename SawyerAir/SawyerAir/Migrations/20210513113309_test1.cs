@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SawyerAir.Migrations
 {
-    public partial class migration : Migration
+    public partial class test1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -119,7 +119,6 @@ namespace SawyerAir.Migrations
                 name: "Bookings",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
                     BookingId = table.Column<Guid>(nullable: false),
                     ClientId = table.Column<Guid>(nullable: false),
                     RouteId = table.Column<Guid>(nullable: false),
@@ -130,7 +129,7 @@ namespace SawyerAir.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bookings", x => x.Id);
+                    table.PrimaryKey("PK_Bookings", x => x.BookingId);
                     table.ForeignKey(
                         name: "FK_Bookings_Clients_ClientId",
                         column: x => x.ClientId,

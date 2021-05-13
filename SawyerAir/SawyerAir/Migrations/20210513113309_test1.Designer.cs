@@ -10,8 +10,8 @@ using SawyerAir.Models;
 namespace SawyerAir.Migrations
 {
     [DbContext(typeof(FlightsContext))]
-    [Migration("20210513100421_migration100")]
-    partial class migration100
+    [Migration("20210513113309_test1")]
+    partial class test1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

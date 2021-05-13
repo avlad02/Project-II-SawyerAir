@@ -3,40 +3,40 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SawyerAir.Migrations
 {
-    public partial class migration100 : Migration
+    public partial class FinalMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropPrimaryKey(
-                name: "PK_Bookings",
-                table: "Bookings");
+                name: "PK_Cards",
+                table: "Cards");
 
             migrationBuilder.DropColumn(
                 name: "Id",
-                table: "Bookings");
+                table: "Cards");
 
             migrationBuilder.AddPrimaryKey(
-                name: "PK_Bookings",
-                table: "Bookings",
-                column: "BookingId");
+                name: "PK_Cards",
+                table: "Cards",
+                column: "CardId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropPrimaryKey(
-                name: "PK_Bookings",
-                table: "Bookings");
+                name: "PK_Cards",
+                table: "Cards");
 
             migrationBuilder.AddColumn<Guid>(
                 name: "Id",
-                table: "Bookings",
+                table: "Cards",
                 type: "uniqueidentifier",
                 nullable: false,
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.AddPrimaryKey(
-                name: "PK_Bookings",
-                table: "Bookings",
+                name: "PK_Cards",
+                table: "Cards",
                 column: "Id");
         }
     }

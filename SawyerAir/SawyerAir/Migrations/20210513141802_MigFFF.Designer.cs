@@ -10,8 +10,8 @@ using SawyerAir.Models;
 namespace SawyerAir.Migrations
 {
     [DbContext(typeof(FlightsContext))]
-    [Migration("20210512095919_migration")]
-    partial class migration
+    [Migration("20210513141802_MigFFF")]
+    partial class MigFFF
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,15 +23,12 @@ namespace SawyerAir.Migrations
 
             modelBuilder.Entity("SawyerAir.Models.Booking", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("BookingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid>("BookingId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
@@ -48,7 +45,7 @@ namespace SawyerAir.Migrations
                     b.Property<Guid>("RouteId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("BookingId");
 
                     b.HasIndex("ClientId");
 
@@ -59,15 +56,14 @@ namespace SawyerAir.Migrations
 
             modelBuilder.Entity("SawyerAir.Models.Card", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("CardId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CVC")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("CardId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CVC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(3)")
+                        .HasMaxLength(3);
 
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
@@ -75,10 +71,12 @@ namespace SawyerAir.Migrations
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(16)")
+                        .HasMaxLength(16);
 
-                    b.HasKey("Id");
+                    b.HasKey("CardId");
 
                     b.HasIndex("ClientId");
 
