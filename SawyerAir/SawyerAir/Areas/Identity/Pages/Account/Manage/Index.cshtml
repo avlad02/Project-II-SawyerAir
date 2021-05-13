@@ -29,6 +29,9 @@
                     <input asp-for="Input.Address" class="form-control" />
                 </div>
                 <button id="update-profile-button" type="submit" class="button button1">Save</button>
+                <div>
+                    <a class="nav-link" asp-controller="Bookings" asp-action="IndexClientId" asp-route-clientEmail="@Model.Email">Bookings</a>
+                </div>
             </form>
         </div>
     </div>

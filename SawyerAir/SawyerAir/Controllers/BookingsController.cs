@@ -52,7 +52,7 @@ namespace SawyerAir.Controllers
         }
 
         // GET: Bookings/Create
-        public IActionResult Create()
+        public IActionResult Create(Guid flightId)
         {
             ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id");
             ViewData["RouteId"] = new SelectList(_context.Routes, "RouteId", "RouteId");
