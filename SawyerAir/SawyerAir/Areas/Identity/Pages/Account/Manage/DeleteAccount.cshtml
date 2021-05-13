@@ -6,21 +6,22 @@
 }
 
 <h4>@ViewData["Title"]</h4>
-
-<div class="row">
-    <div class="col-md-6">
-        <p>
-            This acction erases your account from our database.
-        </p>
-        <p>
-            <strong>THIS CANNOT BE UNDONE</strong>
-        </p>
-        <p>
-            <a id="delete" asp-page="DeletePersonalData" class="btn btn-primary">Delete</a>
-        </p>
+<body style="background-color:antiquewhite">
+    <div class="row">
+        <div class="col-md-6">
+            <p>
+                This acction erases your account from our database.
+            </p>
+            <p>
+                <strong>THIS CANNOT BE UNDONE</strong>
+            </p>
+            <p>
+                <a id="delete" asp-page="DeletePersonalData" class="button button1">Delete</a>
+            </p>
+        </div>
     </div>
-</div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+</body>

@@ -13,11 +13,6 @@ namespace SawyerAir.Controllers
     {
         private readonly FlightsContext _context;
 
-        public IActionResult Pay()
-        {
-            return View();
-        }
-
         public FlightsController(FlightsContext context)
         {
             _context = context;
@@ -28,7 +23,12 @@ namespace SawyerAir.Controllers
         {
             var flightsContext = _context.Flights.Include(f => f.Plane).Include(f => f.Route);
             return View(await flightsContext.ToListAsync());
+        }
 
+        public async Task<IActionResult> IndexRouteId(Guid routeId)
+        {
+            var flightsContext = _context.Flights.Include(f => f.Plane).Include(f => f.Route).Where(f => f.RouteId == routeId);
+            return View(await flightsContext.ToListAsync());
         }
 
         // GET: Flights/Details/5
@@ -47,7 +47,6 @@ namespace SawyerAir.Controllers
             {
                 return NotFound();
             }
-
             return View(flight);
         }
 
@@ -64,10 +63,11 @@ namespace SawyerAir.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FlightId,PlaneId,RouteId,DepartureHour,DestinationHour")] Flight flight)
+        public async Task<IActionResult> Create([Bind("FlightId,PlaneId,RouteId,DepartureDate,DepartureHour,DestinationHour")] Flight flight)
         {
             if (ModelState.IsValid)
             {
+                flight.FlightId = Guid.NewGuid();
                 _context.Add(flight);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -100,7 +100,7 @@ namespace SawyerAir.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("FlightId,PlaneId,RouteId,DepartureHour,DestinationHour")] Flight flight)
+        public async Task<IActionResult> Edit(Guid id, [Bind("FlightId,PlaneId,RouteId,DepartureDate,DepartureHour,DestinationHour")] Flight flight)
         {
             if (id != flight.FlightId)
             {
@@ -155,7 +155,7 @@ namespace SawyerAir.Controllers
         // POST: Flights/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var flight = await _context.Flights.FindAsync(id);
             _context.Flights.Remove(flight);

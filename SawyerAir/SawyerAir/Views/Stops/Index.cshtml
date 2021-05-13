@@ -1,0 +1,60 @@
+﻿@model IEnumerable<SawyerAir.Models.Stop>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <style>
+        body {
+            background-image: url('img/airplane4.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            width: 100%;
+        }
+
+        p {
+            color: black;
+            margin-left: 20px;
+            text-align: left;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 19px;
+        }
+        a {
+            color:black;
+        }
+    </style>
+</head>
+<body>
+    <h3 style="text-align:center">Explorați oportunitățile de călătorie cu SawyerAir!</h3>
+
+    <h1>Stops for the selected route:</h1>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StopLocation)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StopLocation)
+                    </td>
+                    <td>
+
+                        <b> <a asp-action="Details" asp-route-id="@item.StopId">Details</a></b>
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
