@@ -1,8 +1,33 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<head>
+    <link href="~/css/index.css" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url('img/airplane2.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            width: 100%;
+        }
+        p {
+            color: black;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 19px;
+        }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    </style>
+</head>
+<body>
+
+
+    <div class="text-center">
+        <h1>S a w y e r A i r</h1>
+        <h3 style="text-align:center">Explore travelling possibilities with SawyerAir!</h3>
+        <p> See all routes</p>
+        <a asp-controller="Routes" asp-action="Index" class="button button1">Go</a>
+    </div>
+</body>

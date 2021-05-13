@@ -7,15 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SawyerAir.Models;
 using SawyerAir.Data;
-using SawyerAir.Services;
-
 
 namespace SawyerAir.Controllers
 {
     public class RoutesController : Controller
     {
-        private readonly RouteService _routeService;
-
+        private readonly FlightsContext _context;
         private string searchString;
 
         public string RouteDestLoc { get; private set; }
@@ -25,27 +22,25 @@ namespace SawyerAir.Controllers
             return View();
         }
 
-
-        public RoutesController(RouteService routeService)
+        public RoutesController(FlightsContext context)
         {
-            _routeService = routeService;
+            _context = context;
         }
 
         // GET: Routes
-
         public async Task<IActionResult> Index(string RouteDestLoc, string searchString)
         {
-            IQueryable<string> destlocQuery = from m in _routeService.GetRoutes().AsQueryable()
-                                            orderby m.DestinationLocation
-                                            select m.DestinationLocation;
+            IQueryable<string> destlocQuery = from m in _context.Routes
+                                              orderby m.DestinationLocation
+                                              select m.DestinationLocation;
 
-            var routes = from m in _routeService.GetRoutes().AsQueryable()
+            var routes = from m in _context.Routes
                          select m;
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 routes = routes.Where(s => s.DestinationLocation.Contains(searchString));
-            }  
+            }
 
             if (!string.IsNullOrEmpty(RouteDestLoc))
             {
@@ -60,7 +55,6 @@ namespace SawyerAir.Controllers
 
             return View(RouteDestLocVM);
         }
-       
 
         // GET: Routes/Details/5
         public async Task<IActionResult> Details(Guid? id)
@@ -70,7 +64,7 @@ namespace SawyerAir.Controllers
                 return NotFound();
             }
 
-            var route = await _routeService.GetRoutes().AsQueryable()
+            var route = await _context.Routes
                 .FirstOrDefaultAsync(m => m.RouteId == id);
             if (route == null)
             {
@@ -79,7 +73,7 @@ namespace SawyerAir.Controllers
 
             return View(route);
         }
-  
+
         // GET: Routes/Create
         public IActionResult Create()
         {
@@ -95,28 +89,28 @@ namespace SawyerAir.Controllers
         {
             if (ModelState.IsValid)
             {
-                _routeService.AddRoute(route);
-                _routeService.Save();
+                route.RouteId = Guid.NewGuid();
+                _context.Add(route);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(route);
         }
 
         // GET: Routes/Edit/5
-
-        public async Task<IActionResult> Flights(Guid? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var route = _routeService.GetRoutes().FirstOrDefault(m => m.RouteId == id);
+            var route = await _context.Routes.FindAsync(id);
             if (route == null)
             {
                 return NotFound();
             }
-            return View("../Flights/Index");
+            return View(route);
         }
 
         // POST: Routes/Edit/5
@@ -124,7 +118,7 @@ namespace SawyerAir.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Flights(Guid id, [Bind("RouteId,DepartureLocation,DestinationLocation")] Route route)
+        public async Task<IActionResult> Edit(Guid id, [Bind("RouteId,DepartureLocation,DestinationLocation")] Route route)
         {
             if (id != route.RouteId)
             {
@@ -135,8 +129,8 @@ namespace SawyerAir.Controllers
             {
                 try
                 {
-                    _routeService.UpdateRoute(route);
-                    _routeService.Save();
+                    _context.Update(route);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -162,7 +156,7 @@ namespace SawyerAir.Controllers
                 return NotFound();
             }
 
-            var route = _routeService.GetRoutes().AsQueryable()
+            var route = await _context.Routes
                 .FirstOrDefaultAsync(m => m.RouteId == id);
             if (route == null)
             {
@@ -177,17 +171,15 @@ namespace SawyerAir.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var route = _routeService.GetRoutes().FirstOrDefault(m => m.RouteId == id);
-            _routeService.DeleteRoute(route);
-            _routeService.Save();
+            var route = await _context.Routes.FindAsync(id);
+            _context.Routes.Remove(route);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        } 
+        }
 
         private bool RouteExists(Guid id)
         {
-            if (_routeService.GetRoutes().FirstOrDefault(m => m.RouteId == id) != null)
-                return true;
-            return false;
+            return _context.Routes.Any(e => e.RouteId == id);
         }
     }
 }

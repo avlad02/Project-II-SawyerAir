@@ -6,17 +6,43 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Available routes:</h2>
-<form asp-controller="Routes" asp-action="Index" method="get">
-    <p>
-         Filter destination locations  </p>
+<head>
+    <link href="~/css/rezervare.css" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url('img/airplane4.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            width: 100%;
+        }
+        p {
+            color: black;
+            margin-left: 20px;
+            text-align: left;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 19px;
+        }
+        a
+        {
+            color:black;
+        }
+
+    </style>
+</head>
+<body>
+    <h3 style="text-align:center">Explore travelling possibilities with SawyerAir!</h3>
+    <h1>Available routes:</h1>
+    <form asp-controller="Routes" asp-action="Index" method="get">
+        <p>
+            Filter destination locations
+        </p>
         <select asp-for="RouteDestLoc" asp-items="Model.DestinationLocations">
             <option value="">All</option>
         </select>
-        Location: <input type="text" name="SearchString" />
-        <input type="submit" value="Filter" />
-    </p>
-</form>
+        Quick search: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" class="button button1" />
+    </form>
     <table class="table">
         <thead>
             <tr>
@@ -40,9 +66,10 @@
                         @Html.DisplayFor(modelItem => item.DestinationLocation)
                     </td>
                     <td>
-                        <a asp-action="Details" asp-route-id="@item.RouteId">Details</a>
+                        <b> <a asp-action="Details" asp-route-id="@item.RouteId">Details</a></b>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+</body>
