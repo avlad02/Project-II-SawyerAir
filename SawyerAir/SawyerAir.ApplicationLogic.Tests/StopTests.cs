@@ -20,7 +20,7 @@ namespace SawyerAir.ApplicationLogic.Tests
 
             //Assert - evaluate results
             Assert.AreEqual(StopLocation, stop.StopLocation);
-            Assert.AreNotEqual(Guid.Empty, stop.StopId);
+            Assert.IsInstanceOfType(stop, typeof(Stop));
         }
     }
 }

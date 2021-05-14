@@ -22,7 +22,7 @@ namespace SawyerAir.ApplicationLogic.Tests
             //Assert - evaluate results
             Assert.AreEqual(DestinationLocation, route.DestinationLocation);
             Assert.AreEqual(DepartureLocation, route.DepartureLocation);
-            Assert.AreNotEqual(Guid.Empty, route.RouteId);
+            Assert.IsInstanceOfType(route, typeof(Route));
         }
     }
 }

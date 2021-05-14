@@ -20,7 +20,7 @@ namespace SawyerAir.ApplicationLogic.Tests
 
             //Assert - evaluate results
             Assert.AreEqual(Name, line.Name);
-            Assert.AreNotEqual(Guid.Empty, line.LineId);
+            Assert.IsInstanceOfType(line, typeof(Line));
         }
     }
 }
