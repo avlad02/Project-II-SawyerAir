@@ -8,7 +8,7 @@ namespace SawyerAir.Models
 {
     public class Route
     {
-        public int RouteId { get; set; }
+        public Guid RouteId { get; set; }
 
         [Display(Name = "Departure")]
         public string DepartureLocation { get; set; }

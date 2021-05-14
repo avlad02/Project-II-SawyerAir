@@ -1,0 +1,117 @@
+input[type=text] {
+width: 15%;
+padding: 12px 20px;
+margin: 8px 0;
+box-sizing: border-box;
+border: 1px solid #555;
+outline: none;
+                              }
+input[type=text]:focus {
+background-color: lavenderblush;}
+
+input[type=password] {
+width: 15%;
+padding: 12px 20px;
+margin: 8px 0;
+box-sizing: border-box;
+border: 1px solid #555;
+outline: none;
+                              }
+input[type=password]:focus {
+background-color: #B0E0E6;}
+
+ table, th, td {
+              border: 3px solid black;
+              border-collapse: collapse;
+              padding: 10px;
+              text-align: center;
+              border-spacing: 5px;
+              color: #1b1b1a;
+              background-color:#FFEFD5;
+              opacity: 0.7;
+              }
+table.center  {
+            margin-left: auto; 
+            margin-right: auto;
+              }
+
+.button {
+  background-color: white;
+  border: none;
+  color: black;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 4px 2px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition-duration: 0.4s;
+}
+
+.button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #663399;
+}
+
+.button1:hover {
+  background-color: #663399;
+  color: white;
+  opacity:0.8;
+}
+
+.btn-group .button{
+  background-color:#FFEFD5;
+  border: none;
+  color: black;
+  padding: 8px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 4px 2px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition-duration: 0.4s;
+  float: center;
+}
+
+.btn-group .button:hover {
+  background-color: salmon;
+}
+
+
+::-webkit-scrollbar{
+	width: 10;
+}
+
+@keyframes mymove {
+  from {left: 100px;}
+  to {left: 210px;}
+}
+
+
+h1 {
+  color: #F08080;
+ -webkit-text-stroke: 1px black;
+  font-size: 65px;
+  margin-left: 20px;
+  text-align : center ;
+  font-family: 'Courier New', monospace;
+
+}
+h3 {
+  color: #4B0082;
+  margin-left: 20px;
+  text-align : left ;
+  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  animation: mymove 5s infinite;
+  width: 1000px;
+  border: 15px solid salmon ;
+  padding: 10px;
+  background-color:#FAF0E6;
+  opacity: 0.7;
+}

@@ -25,7 +25,7 @@ namespace SawyerAir.Controllers
         }
 
         // GET: Lines/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -57,6 +57,7 @@ namespace SawyerAir.Controllers
         {
             if (ModelState.IsValid)
             {
+                line.LineId = Guid.NewGuid();
                 _context.Add(line);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -65,7 +66,7 @@ namespace SawyerAir.Controllers
         }
 
         // GET: Lines/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -85,7 +86,7 @@ namespace SawyerAir.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("LineId,Name")] Line line)
+        public async Task<IActionResult> Edit(Guid id, [Bind("LineId,Name")] Line line)
         {
             if (id != line.LineId)
             {
@@ -116,7 +117,7 @@ namespace SawyerAir.Controllers
         }
 
         // GET: Lines/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -136,7 +137,7 @@ namespace SawyerAir.Controllers
         // POST: Lines/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var line = await _context.Lines.FindAsync(id);
             _context.Lines.Remove(line);
@@ -144,7 +145,7 @@ namespace SawyerAir.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LineExists(int id)
+        private bool LineExists(Guid id)
         {
             return _context.Lines.Any(e => e.LineId == id);
         }

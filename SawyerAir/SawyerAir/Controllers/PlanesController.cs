@@ -26,7 +26,7 @@ namespace SawyerAir.Controllers
         }
 
         // GET: Planes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -60,6 +60,7 @@ namespace SawyerAir.Controllers
         {
             if (ModelState.IsValid)
             {
+                plane.PlaneId = Guid.NewGuid();
                 _context.Add(plane);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -69,7 +70,7 @@ namespace SawyerAir.Controllers
         }
 
         // GET: Planes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -90,7 +91,7 @@ namespace SawyerAir.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PlaneId,Model,Manufacturer,LineId")] Plane plane)
+        public async Task<IActionResult> Edit(Guid id, [Bind("PlaneId,Model,Manufacturer,LineId")] Plane plane)
         {
             if (id != plane.PlaneId)
             {
@@ -122,7 +123,7 @@ namespace SawyerAir.Controllers
         }
 
         // GET: Planes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -143,7 +144,7 @@ namespace SawyerAir.Controllers
         // POST: Planes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var plane = await _context.Planes.FindAsync(id);
             _context.Planes.Remove(plane);
@@ -151,7 +152,7 @@ namespace SawyerAir.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PlaneExists(int id)
+        private bool PlaneExists(Guid id)
         {
             return _context.Planes.Any(e => e.PlaneId == id);
         }

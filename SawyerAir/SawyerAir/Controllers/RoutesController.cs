@@ -8,13 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using SawyerAir.Models;
 using SawyerAir.Data;
 
-
 namespace SawyerAir.Controllers
 {
     public class RoutesController : Controller
     {
         private readonly FlightsContext _context;
-
         private string searchString;
 
         public string RouteDestLoc { get; private set; }
@@ -24,19 +22,17 @@ namespace SawyerAir.Controllers
             return View();
         }
 
-
         public RoutesController(FlightsContext context)
         {
             _context = context;
         }
 
         // GET: Routes
-
         public async Task<IActionResult> Index(string RouteDestLoc, string searchString)
         {
             IQueryable<string> destlocQuery = from m in _context.Routes
-                                            orderby m.DestinationLocation
-                                            select m.DestinationLocation;
+                                              orderby m.DestinationLocation
+                                              select m.DestinationLocation;
 
             var routes = from m in _context.Routes
                          select m;
@@ -44,7 +40,7 @@ namespace SawyerAir.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 routes = routes.Where(s => s.DestinationLocation.Contains(searchString));
-            }  
+            }
 
             if (!string.IsNullOrEmpty(RouteDestLoc))
             {
@@ -59,10 +55,9 @@ namespace SawyerAir.Controllers
 
             return View(RouteDestLocVM);
         }
-       
 
         // GET: Routes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -78,7 +73,7 @@ namespace SawyerAir.Controllers
 
             return View(route);
         }
-  
+
         // GET: Routes/Create
         public IActionResult Create()
         {
@@ -94,6 +89,7 @@ namespace SawyerAir.Controllers
         {
             if (ModelState.IsValid)
             {
+                route.RouteId = Guid.NewGuid();
                 _context.Add(route);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -102,8 +98,7 @@ namespace SawyerAir.Controllers
         }
 
         // GET: Routes/Edit/5
-
-        public async Task<IActionResult> Flights(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -123,7 +118,7 @@ namespace SawyerAir.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Flights(int id, [Bind("RouteId,DepartureLocation,DestinationLocation")] Route route)
+        public async Task<IActionResult> Edit(Guid id, [Bind("RouteId,DepartureLocation,DestinationLocation")] Route route)
         {
             if (id != route.RouteId)
             {
@@ -154,7 +149,7 @@ namespace SawyerAir.Controllers
         }
 
         // GET: Routes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -174,15 +169,15 @@ namespace SawyerAir.Controllers
         // POST: Routes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var route = await _context.Routes.FindAsync(id);
             _context.Routes.Remove(route);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        } 
+        }
 
-        private bool RouteExists(int id)
+        private bool RouteExists(Guid id)
         {
             return _context.Routes.Any(e => e.RouteId == id);
         }

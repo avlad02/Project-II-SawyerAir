@@ -2,89 +2,77 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<script src="https://kit.fontawesome.com/e67e21160a.js" crossorigin="anonymous"></script>
-
-<h1>Flights</h1>
-
-<style>
-    .form-text {
-        text-align:center;
-        margin: 20px;
-    }
-
-    ::placeholder {
-        text-align: center;
-    }
-
-    div.columns {
-        display: grid;
-        grid-template-columns: repeat( 3, minmax(280px, 1fr) );
-    }
-</style>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
-<div class="columns">
-    <div class="form-text">
-        <input type=text placeholder="placeholder1" readonly  />
-    </div>
-    <div class="form-text">
-        <i class='fas fa-long-arrow-alt-right' style='font-size:36px; stroke-width:100px'></i>
-    </div>
-    
-    <div class="form-text">
-        <input type=text placeholder="placeholder2" readonly />
-    </div>
-</div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DepartureDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DepartureHour)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DestinationHour)
-            </th>
-
-            <th>
-                @Html.DisplayName("Pay")
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartureDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartureHour)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DestinationHour)
-            </td>
-          
-
-            <td>
-                <form asp-action="Pay">   
-                    <input type="submit" value="Pay" class="btn btn-primary" /> 
-                </form>
-            </td>
-
-            
-
-        </tr>
+<head>
+    <style>
+        body {
+            background-image: url('img/airplane4.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            width: 100%;
         }
-    </tbody>
-</table>
+
+        p {
+            color: black;
+            margin-left: 20px;
+            text-align: left;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 19px;
+        }
+    </style>
+</head>
+<body>
+    <h3 style="text-align:center">Explore travelling possibilities with SawyerAir!</h3>
+    <h1>Available flights for the selected route:</h1>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RouteId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DepartureDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DepartureHour)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DestinationHour)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Plane)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RouteId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DepartureDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DepartureHour)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DestinationHour)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Plane.PlaneId)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.FlightId">Details</a> 
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>

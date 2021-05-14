@@ -9,9 +9,9 @@ namespace SawyerAir.Models
 {
     public class Flight
     {
-        public int FlightId { get; set;  }
-        public int PlaneId { get; set; }
-        public int RouteId { get; set; }
+        public Guid FlightId { get; set;  }
+        public Guid PlaneId { get; set; }
+        public Guid RouteId { get; set; }
 
         
         [Display(Name = "Departure Date")]
