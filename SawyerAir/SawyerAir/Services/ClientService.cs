@@ -49,7 +49,13 @@ namespace SawyerAir.Services
 
         public Client GetClientByUserId(string Id)
         {
-            return GetClients().FirstOrDefault(m => m.Id == Guid.Parse(Id));
+            if(GetClients().FirstOrDefault(m => m.Id == Guid.Parse(Id)) != null)
+            {
+                return GetClients().FirstOrDefault(m => m.Id == Guid.Parse(Id));
+            } else
+            {
+                throw new ClientNotFoundException("Client not found");
+            }
         }
     }
 }
