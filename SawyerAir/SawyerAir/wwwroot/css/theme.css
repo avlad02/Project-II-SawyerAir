@@ -7,7 +7,7 @@ border: 1px solid #555;
 outline: none;
                               }
 input[type=text]:focus {
-background-color: #B0E0E6;}
+background-color: lavenderblush;}
 
 input[type=password] {
 width: 15%;

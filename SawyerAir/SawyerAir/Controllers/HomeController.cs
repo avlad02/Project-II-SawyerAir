@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SawyerAir.Models;
 using System;
@@ -17,7 +18,11 @@ namespace SawyerAir.Controllers
         {
             _logger = logger;
         }
-
+        [Authorize]
+        public IActionResult Admin()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
