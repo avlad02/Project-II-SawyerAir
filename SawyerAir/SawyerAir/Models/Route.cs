@@ -21,5 +21,17 @@ namespace SawyerAir.Models
         public ICollection<Booking> Bookings { get; set; }
 
 
+        public static Route Create(Guid RouteId, string DepartureLocation, string DestinationLocation)
+        {
+            var newRoute = new Route()
+            {
+                RouteId = RouteId,
+                DepartureLocation = DepartureLocation,
+                DestinationLocation = DestinationLocation
+            };
+            return newRoute;
+        }
+
+
     }
 }
