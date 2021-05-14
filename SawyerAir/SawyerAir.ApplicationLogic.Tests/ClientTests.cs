@@ -67,8 +67,20 @@ namespace SawyerAir.Tests
             Assert.AreEqual(surname, client.Surname);
             Assert.AreEqual(email, client.Email);
             Assert.AreEqual(phoneNumber, client.PhoneNumber);
-            clientService.
+        }       
+
+        [TestMethod]
+        public void GetAllCustomers_Test()
+        {
+            clientRepositoryMock.Setup(f => f.FindAll()).Returns(clientQ);
+            var client = clientService.GetClients().FirstOrDefault();
+            Assert.IsNotNull(client);
+            Assert.AreEqual(userId, client.Id);
+            Assert.AreEqual(name, client.Name);
+            Assert.AreEqual(surname, client.Surname);
+            Assert.AreEqual(email, client.Email);
+            Assert.AreEqual(phoneNumber, client.PhoneNumber);
+
         }
-        
     }
 }
