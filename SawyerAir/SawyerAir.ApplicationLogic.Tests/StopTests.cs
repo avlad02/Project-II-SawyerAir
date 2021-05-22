@@ -7,7 +7,7 @@ using System.Text;
 namespace SawyerAir.ApplicationLogic.Tests
 {
     [TestClass]
-    class StopTests
+    public class StopTests
     {
         [TestMethod]
         public void ChecksCorrectCreatedStop()

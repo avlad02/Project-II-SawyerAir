@@ -7,7 +7,7 @@ using SawyerAir.Models;
 namespace SawyerAir.ApplicationLogic.Tests
 {
     [TestClass]
-    class RouteTests
+    public class RouteTests
     {
         [TestMethod]
         public void ChecksCorrectCreatedRoute()
@@ -17,7 +17,7 @@ namespace SawyerAir.ApplicationLogic.Tests
             string DepartureLocation = "Bucharest";
 
             //Act - execute code under test
-            var route = Route.Create(Guid.NewGuid(), DestinationLocation, DepartureLocation);
+            var route = Route.Create(1, DestinationLocation, DepartureLocation);
 
             //Assert - evaluate results
             Assert.AreEqual(DestinationLocation, route.DestinationLocation);
