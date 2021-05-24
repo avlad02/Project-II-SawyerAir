@@ -2,6 +2,7 @@ using SawyerAir.AutomatedTests.PageObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using SeleniumExtras.PageObjects;
 using SawyerAir.AutomatedTests.PageObjects;
 using System;
 
@@ -30,7 +31,7 @@ namespace SawyerAir.AutomatedTests
             AdminPage indexPage = new AdminPage(webDriver);
             indexPage.GoToPage();
             AddStopPage addStopPage = indexPage.GotoAddStopPage();
-            addStopPage.Save("My Test Stop Name");
+            addStopPage.Save(StopName);
 
             LogoutPage logoutPage = homePage.GoToLogoutPage();
             logoutPage.Logout();
@@ -41,7 +42,7 @@ namespace SawyerAir.AutomatedTests
         public void ChecksLineCreated()
         {
             Random randomNumber = new Random();
-            string StopName = "MyTestLine " + randomNumber.Next(100, 10000000);
+            string LineName = "MyTestLine " + randomNumber.Next(100, 10000000);
             HomePage homePage = new HomePage(webDriver);
             homePage.GoToPage();
             LoginPage loginPage = homePage.GoToLoginPage();
@@ -50,7 +51,7 @@ namespace SawyerAir.AutomatedTests
             AdminPage indexPage = new AdminPage(webDriver);
             indexPage.GoToPage();
             AddLinePage addLinePage = indexPage.GotoAddLinePage();
-            addLinePage.Save("My Test Line Name");
+            addLinePage.Save(LineName);
 
             LogoutPage logoutPage = homePage.GoToLogoutPage();
             logoutPage.Logout();
