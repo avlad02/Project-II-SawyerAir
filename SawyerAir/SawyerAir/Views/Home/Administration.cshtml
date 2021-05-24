@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Administration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <link href="~/css/index.css" rel="stylesheet" />
+    <style>
+        p {
+            color: black;
+            margin-left: 20px;
+            text-align: left;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 19px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Administration</h1>
+    <a> Manage information about Routes : </a>
+    <a class="button button1" asp-area="" asp-controller="Routes" asp-action="Create"> CLICK HERE to add new Routes </a>
+    <br />
+    <a> Manage information about Flights : </a>
+    <a class="button button1" asp-area="" asp-controller="Flights" asp-action="Create"> CLICK HERE to add new Flights </a>
+
+    <br />
+    <a>Manage all information in Database: </a>
+    <a class="button button1" asp-area="" asp-controller="Stops" asp-action="Delete"> CLICK HERE to delete all info  </a>
+
+</body>

@@ -30,7 +30,6 @@ namespace SawyerAir.Areas.Identity.Pages.Account.Manage
         public string Name { get; set; }
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
-        public string Email { get; set; }
         public string Adress { get; set; }
 
 
@@ -60,12 +59,15 @@ namespace SawyerAir.Areas.Identity.Pages.Account.Manage
             public string Address { get; set; }
         }
 
+        [BindProperty] public string Email { get; set; }
+
         private async Task LoadAsync(ApplicationUser user)
         {
             //var userName = await _userManager.GetUserNameAsync(user);
 
             var id = await _userManager.GetUserIdAsync(user);
             var client = _clientService.GetClientByUserId(id);
+            Email = client.Email;
 
             Input = new InputModel
             {

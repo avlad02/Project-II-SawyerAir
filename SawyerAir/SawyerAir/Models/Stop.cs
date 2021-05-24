@@ -14,17 +14,5 @@ namespace SawyerAir.Models
         public string StopLocation { get; set; }
 
         public ICollection<Route_Stop> Route_Stops { get; set; }
-
-
-
-        public static Stop Create(Guid StopId, string StopLocation)
-        {
-            var newStop = new Stop()
-            {
-                StopId = StopId,
-                StopLocation = StopLocation
-            };
-            return newStop;
-        }
     }
 }

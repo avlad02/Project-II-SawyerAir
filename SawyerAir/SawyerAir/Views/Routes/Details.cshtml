@@ -34,7 +34,8 @@
     <div>
         @*<a asp-action="Flights" asp-route-id="@Model.RouteId">See Flights</a> |*@
 
-        <a asp-area="" asp-controller="Stops" asp-action="Index">See Stops | </a>    <a asp-area="" asp-controller="Flights" asp-action="Index">See Flights | </a>
+        <a asp-area="" asp-controller="Stops" asp-action="IndexRouteId" asp-route-routeId = "@Model.RouteId">See Stops | </a>
+        <a asp-area="" asp-controller="Flights" asp-action="IndexRouteId" asp-route-routeId = "@Model.RouteId">See Flights | </a>
         <a asp-action="Index">Back to List</a>
     </div>
 </body>

@@ -21,7 +21,13 @@ namespace SawyerAir.Controllers
         // GET: Flights
         public async Task<IActionResult> Index()
         {
-            var flightsContext = _context.Flights.Include(f => f.Plane);
+            var flightsContext = _context.Flights.Include(f => f.Plane).Include(f => f.Route);
+            return View(await flightsContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> IndexRouteId(Guid routeId)
+        {
+            var flightsContext = _context.Flights.Include(f => f.Plane).Include(f => f.Route).Where(f => f.RouteId == routeId);
             return View(await flightsContext.ToListAsync());
         }
 
@@ -35,12 +41,12 @@ namespace SawyerAir.Controllers
 
             var flight = await _context.Flights
                 .Include(f => f.Plane)
+                .Include(f => f.Route)
                 .FirstOrDefaultAsync(m => m.FlightId == id);
             if (flight == null)
             {
                 return NotFound();
             }
-
             return View(flight);
         }
 
@@ -48,6 +54,7 @@ namespace SawyerAir.Controllers
         public IActionResult Create()
         {
             ViewData["PlaneId"] = new SelectList(_context.Planes, "PlaneId", "PlaneId");
+            ViewData["RouteId"] = new SelectList(_context.Routes, "RouteId", "RouteId");
             return View();
         }
 
@@ -56,7 +63,7 @@ namespace SawyerAir.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlaneId,RouteId,DepartureDate,DepartureHour,DestinationHour")] Flight flight)
+        public async Task<IActionResult> Create([Bind("FlightId,PlaneId,RouteId,DepartureDate,DepartureHour,DestinationHour")] Flight flight)
         {
             if (ModelState.IsValid)
             {
@@ -66,6 +73,7 @@ namespace SawyerAir.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["PlaneId"] = new SelectList(_context.Planes, "PlaneId", "PlaneId", flight.PlaneId);
+            ViewData["RouteId"] = new SelectList(_context.Routes, "RouteId", "RouteId", flight.RouteId);
             return View(flight);
         }
 
@@ -83,6 +91,7 @@ namespace SawyerAir.Controllers
                 return NotFound();
             }
             ViewData["PlaneId"] = new SelectList(_context.Planes, "PlaneId", "PlaneId", flight.PlaneId);
+            ViewData["RouteId"] = new SelectList(_context.Routes, "RouteId", "RouteId", flight.RouteId);
             return View(flight);
         }
 
@@ -119,6 +128,7 @@ namespace SawyerAir.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["PlaneId"] = new SelectList(_context.Planes, "PlaneId", "PlaneId", flight.PlaneId);
+            ViewData["RouteId"] = new SelectList(_context.Routes, "RouteId", "RouteId", flight.RouteId);
             return View(flight);
         }
 
@@ -132,6 +142,7 @@ namespace SawyerAir.Controllers
 
             var flight = await _context.Flights
                 .Include(f => f.Plane)
+                .Include(f => f.Route)
                 .FirstOrDefaultAsync(m => m.FlightId == id);
             if (flight == null)
             {

@@ -24,6 +24,25 @@ namespace SawyerAir.Controllers
             return View(await _context.Stops.ToListAsync());
         }
 
+        public IActionResult IndexRouteId(Guid routeId)
+        {
+            var routeStop = _context.Route_Stops.Where(s => s.RouteId == routeId);
+            
+            List<Guid> stopList = new List<Guid>();
+            foreach (var id in routeStop)
+            {
+                stopList.Add(id.StopId);
+            }
+           List<Stop> stopsEnum = new List<Stop>();
+
+            foreach(var id in stopList)
+            {
+                stopsEnum.Add(_context.Stops.Find(id));
+            }
+
+            return View(stopsEnum.AsEnumerable());
+        }
+
         // GET: Stops/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {

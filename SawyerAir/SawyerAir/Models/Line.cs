@@ -11,17 +11,5 @@ namespace SawyerAir.Models
         public Guid LineId     { get; set; }
         public string Name { get; set; }
         public ICollection<Plane> Planes { get; set; }
-
-
-
-        public static Line Create(Guid LineId, string Name)
-        {
-            var newLine = new Line()
-            {
-                LineId = LineId,
-                Name = Name
-            };
-            return newLine;
-        }
     }
 }
