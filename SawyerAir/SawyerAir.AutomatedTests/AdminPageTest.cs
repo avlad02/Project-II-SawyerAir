@@ -1,4 +1,4 @@
-using CourseManager.AutomatedTests.PageObjects;
+using SawyerAir.AutomatedTests.PageObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -31,6 +31,9 @@ namespace SawyerAir.AutomatedTests
             indexPage.GoToPage();
             AddStopPage addStopPage = indexPage.GotoAddStopPage();
             addStopPage.Save("My Test Stop Name");
+
+            LogoutPage logoutPage = homePage.GoToLogoutPage();
+            logoutPage.Logout();
 
         }
 

@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using SawyerAir.AutomatedTests.PageObjects;
 using SeleniumExtras.PageObjects;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CourseManager.AutomatedTests.PageObjects
+namespace SawyerAir.AutomatedTests.PageObjects
 {
     class HomePage
     {
@@ -25,10 +24,18 @@ namespace CourseManager.AutomatedTests.PageObjects
         [FindsBy(How = How.LinkText, Using = "Administration")]
         private IWebElement adminButton;
 
+        [FindsBy(How = How.LinkText, Using = "Logout")]
+        private IWebElement logoutButton;
+
         public LoginPage GoToLoginPage()
         {
             loginButton.Click();
             return new LoginPage(webDriver);
+        }
+        public LogoutPage GoToLogoutPage()
+        {
+            logoutButton.Click();
+            return new LogoutPage(webDriver);
         }
         public AdminPage GoToAdminPage()
         {

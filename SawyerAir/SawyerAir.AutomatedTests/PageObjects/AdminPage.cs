@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CourseManager.AutomatedTests.PageObjects
+namespace SawyerAir.AutomatedTests.PageObjects
 {
     class AdminPage
     {
