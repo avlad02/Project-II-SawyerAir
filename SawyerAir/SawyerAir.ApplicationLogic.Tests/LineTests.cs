@@ -22,11 +22,6 @@ namespace SawyerAir.ApplicationLogic.Tests
             Assert.AreEqual(Name, line.Name);
             Assert.IsInstanceOfType(line, typeof(Line));
         }
-       
-        [TestMethod]
-        public void Checks()
-        {
 
-        }
     }
 }

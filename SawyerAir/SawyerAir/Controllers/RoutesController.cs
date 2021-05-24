@@ -13,7 +13,6 @@ namespace SawyerAir.Controllers
     public class RoutesController : Controller
     {
         private readonly FlightsContext _context;
-        private string searchString;
 
         public string RouteDestLoc { get; private set; }
 
@@ -57,7 +56,7 @@ namespace SawyerAir.Controllers
         }
 
         // GET: Routes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -116,7 +115,7 @@ namespace SawyerAir.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Flights(int id, [Bind("RouteId,DepartureLocation,DestinationLocation")] Route route)
+        public async Task<IActionResult> Flights(Guid id, [Bind("RouteId,DepartureLocation,DestinationLocation")] Route route)
         {
             if (id != route.RouteId)
             {
@@ -147,7 +146,7 @@ namespace SawyerAir.Controllers
         }
 
         // GET: Routes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -175,7 +174,7 @@ namespace SawyerAir.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RouteExists(int id)
+        private bool RouteExists(Guid id)
         {
             return _context.Routes.Any(e => e.RouteId == id);
         }

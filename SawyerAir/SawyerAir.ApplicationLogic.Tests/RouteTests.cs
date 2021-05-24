@@ -13,16 +13,17 @@ namespace SawyerAir.ApplicationLogic.Tests
         public void ChecksCorrectCreatedRoute()
         {
             //Arrange - define testing context
-            string DestinationLocation = "Craiova";
-            string DepartureLocation = "Bucharest";
+            string DepartureLocation = "Craiova";
+            string DestinationLocation = "Paris";
 
             //Act - execute code under test
-            var route = Route.Create(1, DestinationLocation, DepartureLocation);
+            var route = Route.Create(Guid.NewGuid(), DepartureLocation, DestinationLocation);
 
             //Assert - evaluate results
-            Assert.AreEqual(DestinationLocation, route.DestinationLocation);
             Assert.AreEqual(DepartureLocation, route.DepartureLocation);
+            Assert.AreEqual(DestinationLocation, route.DestinationLocation);
             Assert.IsInstanceOfType(route, typeof(Route));
         }
+
     }
 }
