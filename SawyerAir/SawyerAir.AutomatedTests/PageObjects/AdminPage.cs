@@ -13,10 +13,12 @@ namespace SawyerAir.AutomatedTests.PageObjects
     {
         private IWebDriver webDriver;
 
+
         [FindsBy(How = How.XPath, Using = "/html/body/div/main/a[6]")]
         private IWebElement addStopButton;
         [FindsBy(How = How.XPath, Using = "/html/body/div/main/a[8]")]
         private IWebElement addLineButton;
+
         public void GoToPage()
         {
             webDriver.Navigate().GoToUrl("https://localhost:44396/Home/Admin");
@@ -31,6 +33,7 @@ namespace SawyerAir.AutomatedTests.PageObjects
             addLineButton.Click();
             return new AddLinePage(webDriver);
         }
+
         public AdminPage(IWebDriver driver)
         {
             webDriver = driver;

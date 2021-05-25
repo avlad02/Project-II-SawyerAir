@@ -18,6 +18,7 @@ namespace SawyerAir.AutomatedTests.PageObjects
 
         [FindsBy(How = How.XPath, Using = "/html/body/div/main/div[1]/div/form/div[2]/input")]
         private IWebElement createButton;
+
         public AddStopPage(IWebDriver driver)
         {
             this.webDriver = driver;

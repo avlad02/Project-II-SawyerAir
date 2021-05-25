@@ -27,10 +27,15 @@ namespace SawyerAir.AutomatedTests
             LoginPage loginPage = homePage.GoToLoginPage();
             loginPage.Login("Beth_A13", "Password1.");
 
-            AdminPage indexPage = new AdminPage(webDriver);
-            indexPage.GoToPage();
-            AddStopPage addStopPage = indexPage.GotoAddStopPage();
+            AdminPage adminPage = new AdminPage(webDriver);
+            adminPage.GoToPage();
+            AddStopPage addStopPage = adminPage.GotoAddStopPage();
             addStopPage.Save(StopName);
+
+            StopsIndexPage indexStopsPage = new StopsIndexPage(webDriver);
+            indexStopsPage.GoToPage();
+
+            Assert.IsTrue(indexStopsPage.StopExists(StopName));
 
             LogoutPage logoutPage = homePage.GoToLogoutPage();
             logoutPage.Logout();
@@ -47,14 +52,18 @@ namespace SawyerAir.AutomatedTests
             LoginPage loginPage = homePage.GoToLoginPage();
             loginPage.Login("Beth_A13", "Password1.");
 
-            AdminPage indexPage = new AdminPage(webDriver);
-            indexPage.GoToPage();
-            AddLinePage addLinePage = indexPage.GotoAddLinePage();
+            AdminPage adminPage = new AdminPage(webDriver);
+            adminPage.GoToPage();
+            AddLinePage addLinePage = adminPage.GotoAddLinePage();
             addLinePage.Save(LineName);
+
+            LinesIndexPage indexLinesPage = new LinesIndexPage(webDriver);
+            indexLinesPage.GoToPage();
+
+            Assert.IsTrue(indexLinesPage.LineExists(LineName));
 
             LogoutPage logoutPage = homePage.GoToLogoutPage();
             logoutPage.Logout();
-
         }
 
 
