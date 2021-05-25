@@ -12,23 +12,17 @@ namespace SawyerAir.AutomatedTests.PageObjects
     class LinesIndexPage
     {
         private IWebDriver webDriver;
-
         [FindsBy(How = How.CssSelector, Using = "main")]
         private IWebElement linesList;
-
-
         public LinesIndexPage(IWebDriver driver)
         {
             webDriver = driver;
             PageFactory.InitElements(driver, this);
         }
-
         public void GoToPage()
         {
             webDriver.Navigate().GoToUrl("https://localhost:44396/Lines");
         }
-
-
         public bool LineExists(string LineName)
         {
             var elements = linesList.FindElements(By.TagName("td"));

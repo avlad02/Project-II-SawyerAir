@@ -12,8 +12,6 @@ namespace SawyerAir.AutomatedTests.PageObjects
     class AdminPage
     {
         private IWebDriver webDriver;
-
-
         [FindsBy(How = How.XPath, Using = "/html/body/div/main/a[6]")]
         private IWebElement addStopButton;
         [FindsBy(How = How.XPath, Using = "/html/body/div/main/a[8]")]

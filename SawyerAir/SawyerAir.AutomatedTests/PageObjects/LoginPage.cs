@@ -35,7 +35,5 @@ namespace SawyerAir.AutomatedTests.PageObjects
             passwordTextBox.SendKeys(password);
             loginButton.Click();
         }
-
-
     }
 }
