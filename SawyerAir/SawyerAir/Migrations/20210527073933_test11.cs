@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SawyerAir.Migrations
 {
-    public partial class test1 : Migration
+    public partial class test11 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -77,16 +77,15 @@ namespace SawyerAir.Migrations
                 name: "Cards",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
                     CardId = table.Column<Guid>(nullable: false),
                     ClientId = table.Column<Guid>(nullable: false),
                     ExpirationDate = table.Column<DateTime>(nullable: false),
-                    Number = table.Column<int>(nullable: false),
-                    CVC = table.Column<int>(nullable: false)
+                    Number = table.Column<string>(maxLength: 16, nullable: false),
+                    CVC = table.Column<string>(maxLength: 3, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cards", x => x.Id);
+                    table.PrimaryKey("PK_Cards", x => x.CardId);
                     table.ForeignKey(
                         name: "FK_Cards_Clients_ClientId",
                         column: x => x.ClientId,

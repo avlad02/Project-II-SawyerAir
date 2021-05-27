@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SawyerAir", "SawyerAir\SawyerAir.csproj", "{6B0A1FB7-AF53-43A6-88D2-D565EC3BFC81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SawyerAir.Services.Test", "SawyerAir.Services.Test\SawyerAir.Services.Test.csproj", "{CDDD1B7E-C39E-44A2-9823-AD8A59EA677C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SawyerAir.Services.Test", "SawyerAir.Services.Test\SawyerAir.Services.Test.csproj", "{CDDD1B7E-C39E-44A2-9823-AD8A59EA677C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SawyerAir.AppTests", "SawyerAir.AppTests\SawyerAir.AppTests.csproj", "{35D4C03F-A18B-49C6-AD49-B7612324D430}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CDDD1B7E-C39E-44A2-9823-AD8A59EA677C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDDD1B7E-C39E-44A2-9823-AD8A59EA677C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDDD1B7E-C39E-44A2-9823-AD8A59EA677C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35D4C03F-A18B-49C6-AD49-B7612324D430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35D4C03F-A18B-49C6-AD49-B7612324D430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35D4C03F-A18B-49C6-AD49-B7612324D430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35D4C03F-A18B-49C6-AD49-B7612324D430}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

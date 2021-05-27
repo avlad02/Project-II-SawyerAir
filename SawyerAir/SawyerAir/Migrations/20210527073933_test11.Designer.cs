@@ -10,8 +10,8 @@ using SawyerAir.Models;
 namespace SawyerAir.Migrations
 {
     [DbContext(typeof(FlightsContext))]
-    [Migration("20210513113309_test1")]
-    partial class test1
+    [Migration("20210527073933_test11")]
+    partial class test11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,15 +56,14 @@ namespace SawyerAir.Migrations
 
             modelBuilder.Entity("SawyerAir.Models.Card", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("CardId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CVC")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("CardId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CVC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(3)")
+                        .HasMaxLength(3);
 
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
@@ -72,10 +71,12 @@ namespace SawyerAir.Migrations
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(16)")
+                        .HasMaxLength(16);
 
-                    b.HasKey("Id");
+                    b.HasKey("CardId");
 
                     b.HasIndex("ClientId");
 
