@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SawyerAir.Models;
 using SawyerAir.Data;
+using SawyerAir.Services;
 
 namespace SawyerAir.Controllers
 {
     public class RoutesController : Controller
     {
         private readonly FlightsContext _context;
+        private readonly SearchService _service;
         private string searchString;
 
         public string RouteDestLoc { get; private set; }
@@ -22,36 +24,38 @@ namespace SawyerAir.Controllers
             return View();
         }
 
-        public RoutesController(FlightsContext context)
+        public RoutesController(FlightsContext context, SearchService service)
         {
             _context = context;
+            _service = service;
         }
 
         // GET: Routes
         public async Task<IActionResult> Index(string RouteDestLoc, string searchString)
         {
-            IQueryable<string> destlocQuery = from m in _context.Routes
-                                              orderby m.DestinationLocation
-                                              select m.DestinationLocation;
+            //IQueryable<string> destlocQuery = from m in _context.Routes
+            //                                  orderby m.DestinationLocation
+            //                                  select m.DestinationLocation;
 
-            var routes = from m in _context.Routes
-                         select m;
+            //var routes = from m in _context.Routes
+            //             select m;
 
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                routes = routes.Where(s => s.DestinationLocation.Contains(searchString));
-            }
+            //if (!string.IsNullOrEmpty(searchString))
+            //{
+            //    routes = routes.Where(s => s.DestinationLocation.Contains(searchString));
+            //}
 
-            if (!string.IsNullOrEmpty(RouteDestLoc))
-            {
-                routes = routes.Where(x => x.DestinationLocation == RouteDestLoc);
-            }
+            //if (!string.IsNullOrEmpty(RouteDestLoc))
+            //{
+            //    routes = routes.Where(x => x.DestinationLocation == RouteDestLoc);
+            //}
 
-            var RouteDestLocVM = new RouteDestLocView
-            {
-                DestinationLocations = new SelectList(await destlocQuery.Distinct().ToListAsync()),
-                Routes = await routes.ToListAsync()
-            };
+            //var RouteDestLocVM = new RouteDestLocView
+            //{
+            //    DestinationLocations = new SelectList(await destlocQuery.Distinct().ToListAsync()),
+            //    Routes = await routes.ToListAsync()
+            //};
+            var RouteDestLocVM = _service.Search(RouteDestLoc, searchString);
 
             return View(RouteDestLocVM);
         }

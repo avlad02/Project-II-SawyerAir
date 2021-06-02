@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SawyerAir.Models
 {
-    public class FlightsContext: DbContext
+    public class FlightsContext: DbContext, IFlightsContext
     {
         public FlightsContext(DbContextOptions<FlightsContext> options )
             : base(options)

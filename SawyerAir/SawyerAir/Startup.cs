@@ -45,6 +45,8 @@ namespace SawyerAir
             services.AddScoped<ClientService>();
             services.AddScoped<RouteService>();
             services.AddScoped<FlightService>();
+            services.AddScoped<SearchService>();
+            services.AddScoped<IFlightsContext>(provider => provider.GetService<FlightsContext>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
